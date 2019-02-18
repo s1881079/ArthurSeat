@@ -57,7 +57,9 @@
 $(document).ready(function(){
     $("#Start").click(function(){
     $("#game").toggle("slow");
+
   });
+  handleZone()
 });
 </script>
 <script>
@@ -67,14 +69,7 @@ var treaCollection = {{treasures_json}}
 var linkCollection = {{links_json}}
 var riskCollection = {{risks_json}}
   //use this when changing to jinja template
-  //var zoneCollection = {{zones_json}}
-  //var stptCollection = {{stpts_json}}
-  /*
-  var zoneCollection = [{"geometry": {"type": "Polygon", "coordinates": [[[-3.164635466813388, 55.951799028282466], [-3.166988496117901, 55.94231630643838], [-3.175117142804584, 55.94295521536799], [-3.1775058240688003, 55.94571038950505], [-3.1761153976583216, 55.94906424994349], [-3.1712667312194647, 55.950701147765145], [-3.1647067707327956, 55.951759105879894], [-3.164635466813388, 55.951799028282466]]]}, "type": "Feature", "properties": {"zone_id": 1}}, {"geometry": {"type": "Polygon", "coordinates": [[[-3.164635466813388, 55.951799028282466], [-3.161723719654915, 55.95290947831496], [-3.1616889017809524, 55.94989275068589], [-3.1616347602558967, 55.94520129599506], [-3.166988496117901, 55.94231630643838], [-3.164635466813388, 55.951799028282466]]]}, "type": "Feature", "properties": {"zone_id": 2}}, {"geometry": {"type": "Polygon", "coordinates": [[[-3.1616347602558967, 55.94520129599506], [-3.1545043684229515, 55.94619951224978], [-3.1521869910871256, 55.94324471751544], [-3.1598165103379565, 55.94046940098423], [-3.1651999561723696, 55.94124810699542], [-3.166988496117901, 55.94231630643838], [-3.1616347602558967, 55.94520129599506]]]}, "type": "Feature", "properties": {"zone_id": 3}}, {"geometry": {"type": "Polygon", "coordinates": [[[-3.1616347602558967, 55.94520129599506], [-3.154646976261766, 55.953126424024084], [-3.150796564676647, 55.95107043830782], [-3.1504756970482966, 55.94761693508114], [-3.1545043684229515, 55.94619951224978], [-3.1616347602558967, 55.94520129599506]]]}, "type": "Feature", "properties": {"zone_id": 4}}, {"geometry": {"type": "Polygon", "coordinates": [[[-3.161723719654915, 55.95290947831496], [-3.1596025985887177, 55.95348571127494], [-3.155966098752837, 55.95382503510049], [-3.154646976261766, 55.953126424024084], [-3.1616347602558967, 55.94520129599506], [-3.161723719654915, 55.95290947831496]]]}, "type": "Feature", "properties": {"zone_id": 5}}];
-  var stptCollection = [{"geometry": {"type": "Point", "coordinates": [-3.169689806055946, 55.95095546913427]}, "type": "Feature", "properties": {"start_id": 1}}, {"geometry": {"type": "Point", "coordinates": [-3.1639334269281885, 55.95206676742041]}, "type": "Feature", "properties": {"start_id": 2}}, {"geometry": {"type": "Point", "coordinates": [-3.155170493466118, 55.95340368175302]}, "type": "Feature", "properties": {"start_id": 3}}, {"geometry": {"type": "Point", "coordinates": [-3.1522975737612766, 55.94697594365855]}, "type": "Feature", "properties": {"start_id": 4}}, {"geometry": {"type": "Point", "coordinates": [-3.1523297085876796, 55.94342669739236]}, "type": "Feature", "properties": {"start_id": 5}}];
-  var linkCollection = [{"geometry": {"type": "LineString", "coordinates": [[-3.1523297085832866, 55.943426697367514], [-3.15760572482999, 55.94305032271554], [-3.159046063973274, 55.94297844615421], [-3.1594971282086757, 55.94297717770729]]}, "type": "Feature", "properties": {"end_point": "12", "link_id": 0, "start_point": "2"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.1523297085832866, 55.943426697367514], [-3.1524147995761806, 55.94324997911372], [-3.154154615179179, 55.94299441875169], [-3.157933722853874, 55.941868335773705], [-3.1590888463285114, 55.94194021439523], [-3.1601726658837412, 55.94251523851504], [-3.161484657979279, 55.94358539952344], [-3.161941003059893, 55.94351352400544], [-3.1629434842534807, 55.942531273836195]]}, "type": "Feature", "properties": {"end_point": "13", "link_id": 1, "start_point": "2"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.1523297085832866, 55.943426697367514], [-3.153013752486627, 55.9440805386692], [-3.156650252322507, 55.94467948884307], [-3.1589890208449347, 55.944575671484635], [-3.1591173678926814, 55.94453574163408], [-3.1594168443523962, 55.944703446659354], [-3.1596450168927026, 55.94449581179264], [-3.1614703971971942, 55.944431923890285], [-3.1615559618986864, 55.944192343430984], [-3.161883959922571, 55.944128455028014], [-3.162004649335577, 55.94399541645989]]}, "type": "Feature", "properties": {"end_point": "11", "link_id": 2, "start_point": "2"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.1522975737614827, 55.94697594363948], [-3.1527998407373876, 55.947067211425896], [-3.1544683524209787, 55.94637247119394], [-3.1565504268389293, 55.946276643969945], [-3.158593945241493, 55.94709655394156]]}, "type": "Feature", "properties": {"end_point": "14", "link_id": 3, "start_point": "3"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.1522975737614827, 55.94697594363948], [-3.1525146250597573, 55.94734670109357], [-3.1522864525194505, 55.94850456539155], [-3.151929932931397, 55.94983806275322], [-3.1521153231164663, 55.950293198042395], [-3.153669748534395, 55.95160268027243], [-3.1533174552861913, 55.95166129589003]]}, "type": "Feature", "properties": {"end_point": "16", "link_id": 4, "start_point": "3"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.1522975737614827, 55.94697594363948], [-3.152508418213184, 55.947333823537065], [-3.1519361970904853, 55.94981463317811], [-3.152108434718086, 55.95027628703189], [-3.153669748534395, 55.95160268027243], [-3.1551671308239846, 55.951466943337884], [-3.1560940817583156, 55.95099585255517], [-3.1548961759284397, 55.95074832798157], [-3.154425570074724, 55.95074034330779], [-3.153864118656337, 55.950476910165925]]}, "type": "Feature", "properties": {"end_point": "15", "link_id": 5, "start_point": "3"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.1551704934696216, 55.95340368172872], [-3.1553097386538163, 55.95292010249094], [-3.155537911194124, 55.95276041730792], [-3.1577625934508897, 55.95256080994067], [-3.1577620661937167, 55.952446430498945]]}, "type": "Feature", "properties": {"end_point": "19", "link_id": 6, "start_point": "4"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.1551704934696216, 55.95340368172872], [-3.1553097386538163, 55.95292010249094], [-3.1554989549074115, 55.95278768071038], [-3.155766083734431, 55.95320753408012], [-3.156635991540422, 55.95371851832525], [-3.1583187640060975, 55.95357480471943], [-3.159017542409104, 55.95315164477856], [-3.159374061997158, 55.95313567637031], [-3.1599730149165874, 55.95268057449458], [-3.160243969803149, 55.95215360773644], [-3.1607145756658483, 55.951506865991426], [-3.160971269770325, 55.95135515957833], [-3.16106581440869, 55.95119553055981]]}, "type": "Feature", "properties": {"end_point": "17", "link_id": 7, "start_point": "4"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.1551704934696216, 55.95340368172872], [-3.1553097386538163, 55.95292010249094], [-3.1554951288478694, 55.95275243304909], [-3.1577625934508897, 55.95256080994067], [-3.1580763306837056, 55.95135515957833], [-3.158361546361336, 55.950820190122435], [-3.158960499271782, 55.95026924368422], [-3.1586182404658123, 55.94931105730556], [-3.1588321522240346, 55.948624342492955], [-3.159046063973274, 55.94846463959199], [-3.1593027580777506, 55.9490555369399], [-3.1595684321191, 55.94907955457101]]}, "type": "Feature", "properties": {"end_point": "18", "link_id": 8, "start_point": "4"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.1639334269240296, 55.95206676742574], [-3.1638947304211142, 55.95189012169277], [-3.1630676049703608, 55.951762370230625], [-3.1628109108569014, 55.951450974234774], [-3.162782389292731, 55.95070840454588], [-3.1629677794778006, 55.950460878134635], [-3.163167430453938, 55.95060460335001], [-3.1642269547848483, 55.95097595351422]]}, "type": "Feature", "properties": {"end_point": "8", "link_id": 9, "start_point": "1"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.1639334269240296, 55.95206676742574], [-3.1638947304211142, 55.95189012169277], [-3.1630676049703608, 55.951762370230625], [-3.1628100934169416, 55.951429691978625], [-3.1628086939225772, 55.95067328360164], [-3.16294672484502, 55.95048898961286], [-3.1638947304211142, 55.94981144647473], [-3.1636665578808074, 55.94885324876693], [-3.163058097776316, 55.948267671822265], [-3.1625637239464695, 55.94590398033378], [-3.163552471615145, 55.94549937005263], [-3.1644408665430706, 55.94420172302241]]}, "type": "Feature", "properties": {"end_point": "9", "link_id": 10, "start_point": "1"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.1639334269240296, 55.95206676742574], [-3.163900766911177, 55.95191767772453], [-3.163058097776316, 55.9517916466205], [-3.1628109108569014, 55.951450974234774], [-3.162835818858009, 55.95063706745222], [-3.1638947304211142, 55.94981144647473], [-3.1645031905256054, 55.949385583782195], [-3.1646172767912675, 55.94798020355886], [-3.1649975643554518, 55.947256199909724], [-3.1650165787345594, 55.94692613491703], [-3.165111650621114, 55.94635117628694], [-3.1655489813226203, 55.94511605114193], [-3.166157441427112, 55.94439199394182], [-3.1660927406460653, 55.94387562504017]]}, "type": "Feature", "properties": {"end_point": "10", "link_id": 11, "start_point": "1"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.1696898060579404, 55.95095546915822], [-3.171443438567476, 55.9503224755935], [-3.1749420841615636, 55.94882130844837], [-3.1768245076033774, 55.9470219605338], [-3.1769576082481468, 55.945456779266685], [-3.1757977311764862, 55.944477177808956], [-3.1734489282118234, 55.94335652469018]]}, "type": "Feature", "properties": {"end_point": "7", "link_id": 12, "start_point": "0"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.1696898060579404, 55.95095546915822], [-3.1660433551524667, 55.95101448340221], [-3.1651877081375437, 55.95058863389122], [-3.165130665000221, 55.95041829280553], [-3.1674314047644336, 55.94965174852021], [-3.1683821236748946, 55.94852319738708], [-3.1688384687555087, 55.948267671822265], [-3.1690399692729847, 55.94804148637087]]}, "type": "Feature", "properties": {"end_point": "5", "link_id": 13, "start_point": "0"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.1696898060579404, 55.95095546915822], [-3.1659914262318543, 55.9509886388321], [-3.1652183934108566, 55.950603905826505], [-3.1668990021763728, 55.95070574296863], [-3.1688194543764014, 55.9495133430868], [-3.170340604633138, 55.94921523735346], [-3.170644834680892, 55.94877872131598], [-3.1698842595525236, 55.94735202470971], [-3.169146925143113, 55.94707659032103]]}, "type": "Feature", "properties": {"end_point": "6", "link_id": 14, "start_point": "0"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.1734489282118234, 55.94335652469018], [-3.170853992842092, 55.942816057898696], [-3.1670035812569726, 55.94248595506071], [-3.1662144845644344, 55.94275749147308], [-3.1659958192091895, 55.942874624235756], [-3.165900747322635, 55.943146157923174], [-3.1658627185644197, 55.94347625513413], [-3.1660927406460653, 55.94387562504017]]}, "type": "Feature", "properties": {"end_point": "10", "link_id": 15, "start_point": "7"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.169146925143113, 55.94707659032103], [-3.1698842595525236, 55.94735202470971], [-3.1705473859958264, 55.94568171140713], [-3.16934710336744, 55.94465020702511], [-3.1664474106927814, 55.94327260679538], [-3.1660433551524667, 55.94326595159922], [-3.1658991709949067, 55.94315984077831], [-3.1658627185644197, 55.94347625513413], [-3.1660927406460653, 55.94387562504017]]}, "type": "Feature", "properties": {"end_point": "10", "link_id": 16, "start_point": "6"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.1690399692729847, 55.94804148637087], [-3.168824207973424, 55.94830360523658], [-3.1683821236748946, 55.94852319738708], [-3.1674314047644336, 55.94965174852021], [-3.164450900985306, 55.95059928018105], [-3.1634288781554374, 55.950452893401575], [-3.162956240447296, 55.950476284666145], [-3.1632186868418297, 55.95062256814709], [-3.1642269547848483, 55.95097595351422]]}, "type": "Feature", "properties": {"end_point": "8", "link_id": 17, "start_point": "5"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.169146925143113, 55.94707659032103], [-3.1698842595525236, 55.94735202470971], [-3.170644834680892, 55.94877872131598], [-3.170333474237604, 55.94923519987142], [-3.1687985041817552, 55.94952635114792], [-3.1667920462972616, 55.950020383678364], [-3.1660006637606344, 55.95010659814408], [-3.1644390169927488, 55.9506125880518], [-3.1633945448776553, 55.95045459255291], [-3.162975632505099, 55.95048709354836], [-3.1632186868418297, 55.95062256814709], [-3.1642269547848483, 55.95097595351422]]}, "type": "Feature", "properties": {"end_point": "8", "link_id": 18, "start_point": "6"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.1642269547848483, 55.95097595351422], [-3.162975632505099, 55.95048709354836], [-3.162159668406155, 55.95043026991521], [-3.1617128305195856, 55.94991391900628], [-3.1616367730031563, 55.95037703820444], [-3.1613895860927244, 55.950829505589354], [-3.1612850070121246, 55.95095193700912], [-3.1611328919882475, 55.95093064462047], [-3.16106581440869, 55.95119553055981]]}, "type": "Feature", "properties": {"end_point": "17", "link_id": 19, "start_point": "8"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.1642269547848483, 55.95097595351422], [-3.162975632505099, 55.95048709354836], [-3.162159668406155, 55.95043026991521], [-3.1617128305195856, 55.94989262604679], [-3.1614466292210635, 55.94901428088681], [-3.1604578815613715, 55.94883860946382], [-3.160106115561357, 55.94870020112383], [-3.1597828711344955, 55.94870020112383], [-3.159583220158358, 55.948902490096344], [-3.1595684321191, 55.94907955457101]]}, "type": "Feature", "properties": {"end_point": "18", "link_id": 20, "start_point": "8"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.1644408665430706, 55.94420172302241], [-3.164766978742662, 55.94351345065849], [-3.1658532113703743, 55.9428546584387], [-3.164750377436037, 55.9430143844767], [-3.163533457236037, 55.94288660372917], [-3.163780644146469, 55.94265233792204], [-3.163780644146469, 55.942450016298174], [-3.1634383853405, 55.942205099255325], [-3.1629434842534807, 55.942531273836195]]}, "type": "Feature", "properties": {"end_point": "13", "link_id": 21, "start_point": "9"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.1660927406460653, 55.94387562504017], [-3.165874433125731, 55.94349659433829], [-3.1660285218740514, 55.94285710639701], [-3.1648262760135437, 55.94300339189942], [-3.163577082678136, 55.94289118451633], [-3.163780644146469, 55.94265233792204], [-3.163780644146469, 55.94248196187211], [-3.1634383853405, 55.942205099255325], [-3.1629434842534807, 55.942531273836195]]}, "type": "Feature", "properties": {"end_point": "13", "link_id": 22, "start_point": "10"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.1660927406460653, 55.94387562504017], [-3.1658627185644197, 55.94347625513413], [-3.1660285218740514, 55.94285710639701], [-3.164750377436037, 55.9430143844767], [-3.163577082678136, 55.94289118451633], [-3.1638376872837917, 55.94260974395467], [-3.1637477423610414, 55.94242647217886], [-3.1634383853405, 55.942205099255325], [-3.161765120059886, 55.9417472067033], [-3.1618221631972085, 55.94215185623686], [-3.161593990656901, 55.94259909546808], [-3.160444416758493, 55.94273690170129], [-3.1594971282086757, 55.94297717770729]]}, "type": "Feature", "properties": {"end_point": "12", "link_id": 23, "start_point": "10"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.162004649335577, 55.94399541645989], [-3.1618982207046558, 55.943472262047635], [-3.162620767074809, 55.942418070697876], [-3.1627158389703465, 55.942268990780875], [-3.1626133520031616, 55.941979327848514], [-3.163533457236037, 55.94222639644222], [-3.1638757160420066, 55.942641689447164], [-3.163608454345174, 55.94285437500676], [-3.164786478804911, 55.9429998171693], [-3.1658129574762173, 55.942860488563575], [-3.164750377436037, 55.94348291029415], [-3.1644408665430706, 55.94420172302241]]}, "type": "Feature", "properties": {"end_point": "9", "link_id": 24, "start_point": "11"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.162004649335577, 55.94399541645989], [-3.1619221877833854, 55.94343729466592], [-3.162705681414002, 55.94224028221344], [-3.1626133520031616, 55.941979327848514], [-3.163551265824505, 55.94224800527666], [-3.1638757160420066, 55.942641689447164], [-3.163608454345174, 55.94285437500676], [-3.164750377436037, 55.9430143844767], [-3.1659958192091895, 55.942874624235756], [-3.165874433125731, 55.94349659433829], [-3.1660927406460653, 55.94387562504017]]}, "type": "Feature", "properties": {"end_point": "10", "link_id": 25, "start_point": "11"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.1594971282086757, 55.94297717770729], [-3.159963507722542, 55.94289991425072], [-3.1587988770628423, 55.94372515719947], [-3.158347285579251, 55.94453707265994], [-3.1583235176031206, 55.944696791709084], [-3.1579432300389363, 55.94480327072599], [-3.1579669980150666, 55.94605437718226], [-3.1565504268389293, 55.946276643969945], [-3.158593945241493, 55.94709655394156]]}, "type": "Feature", "properties": {"end_point": "14", "link_id": 26, "start_point": "12"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.162004649335577, 55.94399541645989], [-3.1615427066817476, 55.94422945803014], [-3.1614860292126443, 55.94438815448186], [-3.1596122925694594, 55.944525590642456], [-3.1594168443523962, 55.944703446659354], [-3.1591173678926814, 55.94453574163408], [-3.157949044950551, 55.94510936160277], [-3.1579669980150666, 55.94605437718226], [-3.159250468537451, 55.947292134212354], [-3.159060324755359, 55.94751838661577], [-3.158593945241493, 55.94709655394156]]}, "type": "Feature", "properties": {"end_point": "14", "link_id": 27, "start_point": "11"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.158593945241493, 55.94709655394156], [-3.159060324755359, 55.94751838661577], [-3.159046063973274, 55.94846463959199], [-3.1593027580777506, 55.9490555369399], [-3.1595684321191, 55.94907955457101]]}, "type": "Feature", "properties": {"end_point": "18", "link_id": 28, "start_point": "14"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.153864118656337, 55.950476910165925], [-3.154425570074724, 55.95074034330779], [-3.1549863513319423, 55.95076696111051], [-3.1560940817583156, 55.95099585255517], [-3.157729318280714, 55.95048616314534], [-3.1589053758611705, 55.95011492200722], [-3.158652155532914, 55.94940600684963], [-3.158775109086712, 55.9486097031033], [-3.159000999897215, 55.94849828371745], [-3.1593027580777506, 55.9490555369399], [-3.1595684321191, 55.94907955457101]]}, "type": "Feature", "properties": {"end_point": "18", "link_id": 29, "start_point": "15"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.153897166409015, 55.95049241622978], [-3.1543870356997514, 55.95072226303272], [-3.1548961759284397, 55.95074832798157], [-3.1560940817583156, 55.95099585255517], [-3.1588907494108662, 55.95007397420264], [-3.158960499271782, 55.95026924368422], [-3.1583265142481616, 55.95088589910042], [-3.158053809245797, 55.95144170775504], [-3.1577620661937167, 55.952446430498945]]}, "type": "Feature", "properties": {"end_point": "19", "link_id": 30, "start_point": "15"}}, {"geometry": {"type": "LineString", "coordinates": [[-3.1533174552861913, 55.95166129589003], [-3.1535643943065197, 55.95162020944525], [-3.1554951288478694, 55.95272182664124], [-3.1577028936628957, 55.95256616648718], [-3.1577620661937167, 55.952446430498945]]}, "type": "Feature", "properties": {"end_point": "19", "link_id": 31, "start_point": "16"}}]
-  var riskCollection = [{"geometry": {"type": "Point", "coordinates": [-3.175996854895451, 55.94438007749399]}, "type": "Feature", "properties": {"risk_id": 0, "zone_id": 0}}, {"geometry": {"type": "Point", "coordinates": [-3.171186217205826, 55.94934172898167]}, "type": "Feature", "properties": {"risk_id": 1, "zone_id": 0}}, {"geometry": {"type": "Point", "coordinates": [-3.1682770173461052, 55.94900103503918]}, "type": "Feature", "properties": {"risk_id": 2, "zone_id": 0}}, {"geometry": {"type": "Point", "coordinates": [-3.168714348038628, 55.9482131688126]}, "type": "Feature", "properties": {"risk_id": 3, "zone_id": 0}}, {"geometry": {"type": "Point", "coordinates": [-3.1695890094416423, 55.94521061281382]}, "type": "Feature", "properties": {"risk_id": 4, "zone_id": 0}}, {"geometry": {"type": "Point", "coordinates": [-3.1690566068535806, 55.943496283141826]}, "type": "Feature", "properties": {"risk_id": 5, "zone_id": 0}}, {"geometry": {"type": "Point", "coordinates": [-3.1669079821132455, 55.943794432903566]}, "type": "Feature", "properties": {"risk_id": 6, "zone_id": 0}}, {"geometry": {"type": "Point", "coordinates": [-3.1677256003789362, 55.94768081772913]}, "type": "Feature", "properties": {"risk_id": 7, "zone_id": 0}}, {"geometry": {"type": "Point", "coordinates": [-3.1715094616416706, 55.94512543050964]}, "type": "Feature", "properties": {"risk_id": 8, "zone_id": 0}}, {"geometry": {"type": "Point", "coordinates": [-3.174532747776037, 55.94927784907378]}, "type": "Feature", "properties": {"risk_id": 9, "zone_id": 0}}, {"geometry": {"type": "Point", "coordinates": [-3.1628198907937732, 55.95167327261521]}, "type": "Feature", "properties": {"risk_id": 10, "zone_id": 1}}, {"geometry": {"type": "Point", "coordinates": [-3.1619642437788507, 55.95081093722284]}, "type": "Feature", "properties": {"risk_id": 11, "zone_id": 1}}, {"geometry": {"type": "Point", "coordinates": [-3.1636755378176793, 55.95057671935015]}, "type": "Feature", "properties": {"risk_id": 12, "zone_id": 1}}, {"geometry": {"type": "Point", "coordinates": [-3.163352293390818, 55.94824510963279]}, "type": "Feature", "properties": {"risk_id": 13, "zone_id": 1}}, {"geometry": {"type": "Point", "coordinates": [-3.162800876414666, 55.94564716907508]}, "type": "Feature", "properties": {"risk_id": 14, "zone_id": 1}}, {"geometry": {"type": "Point", "coordinates": [-3.164188926026633, 55.94691421924897]}, "type": "Feature", "properties": {"risk_id": 15, "zone_id": 1}}, {"geometry": {"type": "Point", "coordinates": [-3.1654438749938305, 55.94475275579497]}, "type": "Feature", "properties": {"risk_id": 16, "zone_id": 1}}, {"geometry": {"type": "Point", "coordinates": [-3.1662424788714314, 55.94311294440431]}, "type": "Feature", "properties": {"risk_id": 17, "zone_id": 1}}, {"geometry": {"type": "Point", "coordinates": [-3.1637706097042337, 55.94452914923468]}, "type": "Feature", "properties": {"risk_id": 18, "zone_id": 1}}, {"geometry": {"type": "Point", "coordinates": [-3.165291759960971, 55.947893759010576]}, "type": "Feature", "properties": {"risk_id": 19, "zone_id": 1}}, {"geometry": {"type": "Point", "coordinates": [-3.159454345853438, 55.9487029253616]}, "type": "Feature", "properties": {"risk_id": 20, "zone_id": 2}}, {"geometry": {"type": "Point", "coordinates": [-3.1605191510295603, 55.94694616114063]}, "type": "Feature", "properties": {"risk_id": 21, "zone_id": 2}}, {"geometry": {"type": "Point", "coordinates": [-3.160956481731068, 55.94867098491905]}, "type": "Feature", "properties": {"risk_id": 22, "zone_id": 2}}, {"geometry": {"type": "Point", "coordinates": [-3.160975496110175, 55.95082158345154]}, "type": "Feature", "properties": {"risk_id": 23, "zone_id": 2}}, {"geometry": {"type": "Point", "coordinates": [-3.160595208545991, 55.95213104781125]}, "type": "Feature", "properties": {"risk_id": 24, "zone_id": 2}}, {"geometry": {"type": "Point", "coordinates": [-3.1591120870474687, 55.953067873190555]}, "type": "Feature", "properties": {"risk_id": 25, "zone_id": 2}}, {"geometry": {"type": "Point", "coordinates": [-3.155974714638458, 55.953057227579514]}, "type": "Feature", "properties": {"risk_id": 26, "zone_id": 2}}, {"geometry": {"type": "Point", "coordinates": [-3.1564881028563945, 55.95246106843801]}, "type": "Feature", "properties": {"risk_id": 27, "zone_id": 2}}, {"geometry": {"type": "Point", "coordinates": [-3.157666994298179, 55.95032120733683]}, "type": "Feature", "properties": {"risk_id": 28, "zone_id": 2}}, {"geometry": {"type": "Point", "coordinates": [-3.158998000772824, 55.95052348784072]}, "type": "Feature", "properties": {"risk_id": 29, "zone_id": 2}}, {"geometry": {"type": "Point", "coordinates": [-3.15760995116984, 55.94805346426608]}, "type": "Feature", "properties": {"risk_id": 30, "zone_id": 3}}, {"geometry": {"type": "Point", "coordinates": [-3.1530084716414137, 55.94726557875909]}, "type": "Feature", "properties": {"risk_id": 31, "zone_id": 3}}, {"geometry": {"type": "Point", "coordinates": [-3.1541873630921815, 55.948181227966046]}, "type": "Feature", "properties": {"risk_id": 32, "zone_id": 3}}, {"geometry": {"type": "Point", "coordinates": [-3.1542634205996287, 55.95014021861118]}, "type": "Feature", "properties": {"risk_id": 33, "zone_id": 3}}, {"geometry": {"type": "Point", "coordinates": [-3.1586747563459623, 55.94625408062036]}, "type": "Feature", "properties": {"risk_id": 34, "zone_id": 3}}, {"geometry": {"type": "Point", "coordinates": [-3.159207158934023, 55.947638229292075]}, "type": "Feature", "properties": {"risk_id": 35, "zone_id": 3}}, {"geometry": {"type": "Point", "coordinates": [-3.154681736922028, 55.95256752610623]}, "type": "Feature", "properties": {"risk_id": 36, "zone_id": 3}}, {"geometry": {"type": "Point", "coordinates": [-3.1524950834324605, 55.95155616646424]}, "type": "Feature", "properties": {"risk_id": 37, "zone_id": 3}}, {"geometry": {"type": "Point", "coordinates": [-3.1566021891220566, 55.94996987555271]}, "type": "Feature", "properties": {"risk_id": 38, "zone_id": 3}}, {"geometry": {"type": "Point", "coordinates": [-3.1561458440414425, 55.948319638161095]}, "type": "Feature", "properties": {"risk_id": 39, "zone_id": 3}}, {"geometry": {"type": "Point", "coordinates": [-3.1618121287549736, 55.944028691802465]}, "type": "Feature", "properties": {"risk_id": 40, "zone_id": 4}}, {"geometry": {"type": "Point", "coordinates": [-3.1620783300445128, 55.94243144391324]}, "type": "Feature", "properties": {"risk_id": 41, "zone_id": 4}}, {"geometry": {"type": "Point", "coordinates": [-3.1593592739668837, 55.94302775748616]}, "type": "Feature", "properties": {"risk_id": 42, "zone_id": 4}}, {"geometry": {"type": "Point", "coordinates": [-3.163960753486326, 55.94235690410251]}, "type": "Feature", "properties": {"risk_id": 43, "zone_id": 4}}, {"geometry": {"type": "Point", "coordinates": [-3.164150897268418, 55.94326202102249]}, "type": "Feature", "properties": {"risk_id": 44, "zone_id": 4}}, {"geometry": {"type": "Point", "coordinates": [-3.1529704428831993, 55.943645358284456]}, "type": "Feature", "properties": {"risk_id": 45, "zone_id": 4}}, {"geometry": {"type": "Point", "coordinates": [-3.162762847665434, 55.94159020022779]}, "type": "Feature", "properties": {"risk_id": 46, "zone_id": 4}}, {"geometry": {"type": "Point", "coordinates": [-3.1580472818623635, 55.94553004469774]}, "type": "Feature", "properties": {"risk_id": 47, "zone_id": 4}}, {"geometry": {"type": "Point", "coordinates": [-3.154928923841443, 55.94523190834801]}, "type": "Feature", "properties": {"risk_id": 48, "zone_id": 4}}, {"geometry": {"type": "Point", "coordinates": [-3.156507117235502, 55.94436942949414]}, "type": "Feature", "properties": {"risk_id": 49, "zone_id": 4}}]
-*/
+
 </script>
 <body>
     <!-- Navbar -->
@@ -89,12 +84,7 @@ var riskCollection = {{risks_json}}
             </button>
             <a class="navbar-brand" href="#">Arthur's Seat Bandits</a>
           </div>
-          <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav navbar-right">
-              <li><a href="#">WHO</a></li>
-
-            </ul>
-          </div>
+          
         </div>
       </nav>
 
@@ -106,7 +96,7 @@ var riskCollection = {{risks_json}}
 </div>
 </div>
 <div class="container-fluid bg-2 text-center">
-<button id ="Start"> Play!</button>
+<button id ="Start" style="color:#006600; font-weight:600"> Play!</button>
 </div>
 <div class="container-fluid bg-3 text-center">
     <div id = 'lf_map_div' style="height:100%">
@@ -125,6 +115,15 @@ var riskCollection = {{risks_json}}
         overflow: hidden;  /* Enable scroll if needed */
         background-color: rgba(105,105,105,0.7); /* Fallback color */
       }
+
+      #lose_png{
+        height:100px;
+        width: 100px;
+      }
+      #win_png{
+        height:160px;
+        width: 300px;
+      }
       .distance {
         height: 250px;
         width: 250px;
@@ -133,6 +132,7 @@ var riskCollection = {{risks_json}}
         color: black;
         border-radius: 25px;
         border: 2px solid black;
+        padding: 10px;
       }
       #distancebox {
         height: 250px;
@@ -140,7 +140,7 @@ var riskCollection = {{risks_json}}
         position: absolute;
         z-index: 2;
         left: 50px;
-        padding-top: 25%;
+        padding-top: 16%;
       }
       #treasurebox {
         height: 250px;
@@ -179,32 +179,41 @@ var riskCollection = {{risks_json}}
         					<h1 class="modal-title">You won!</h1>
         				</div>
         				<div class="modal-body">
-        					<h3>You won!</h3>
+        					<h3 id = 'winning_info'>You won!</h3>
         					<br>
-                  The high king of Edinburgh proud of your great achievments
+                  <p>The High King of Edinburgh is proud of your great achievements!</p>
         					<br>
+                  <br>
+                  <img  id = 'win_png' src = 'https://pngimage.net/wp-content/uploads/2018/05/celebration-images-png-5.png'>
+
         					<h3>Do you want to play again?</h3>
-        				</div>
+
+
+                </div>
         				<div class="modal-footer">
-        					<button onclick="playAgain('winModal')">YES</button>
-        					<button onclick="finishedPlaying('winModal')">NO</button>
+        					<button onclick="playAgain('winModal')" style="color:#000066">YES</button>
+        					<button onclick="finishedPlaying('winModal')" style="color:#000066">NO</button>
         				</div>
         			</div>
         		</div>
       <div id="death" class="modal">
             <div class="modal-content" style="background-color:#374d8a">
               <div class="modal-header">
-              					<h1 class="modal-title">You won!</h1>
+              					<h1 class="modal-title">You Lose!</h1>
               </div>
                 <div class="modal-body">
-              					<h3>You Died</h3>
+              					<h3 id = 'failing_info'>You Died</h3>
               					<br>
               					<br>
+                        <img id = 'lose_png' src = 'https://cdn3.iconfinder.com/data/icons/halloween-29/64/grave-512.png'>
+
               					<h3>Do you want to play again?</h3>
                 </div>
+
+
               		<div class="modal-footer">
-              					<button onclick="playAgain('winModal')">YES</button>
-              					<button onclick="finishedPlaying('winModal')">NO</button>
+              					<button style="color:#000066" onclick="playAgain('winModal')">YES</button>
+              					<button style="color:#000066" onclick="finishedPlaying('winModal')">NO</button>
               		</div>
               </div>
       </div>
@@ -256,8 +265,8 @@ zone_lyr.addTo(map);
 
 var tresMarker = L.icon({
   iconUrl : 'https://www.freepngimg.com/thumb/treasure/1-2-treasure-png-thumb.png',
-  iconSize: [40,40],
-  iconAnchor: [30,0]
+  iconSize: [45,45],
+  iconAnchor: [20,20]
 })
 
 function handleTreas(feature, layer) {
@@ -278,7 +287,7 @@ var trea_lyr = L.geoJSON(treaCollection, {
 	onEachFeature: handleTreas
 });
 
-trea_lyr.addTo(map);
+
 
 //handling risk
 /*
@@ -293,9 +302,9 @@ var riskMarker = {
 */
 
 var riskMarker = L.icon({
-  iconUrl : 'https://cdn0.iconfinder.com/data/icons/outlined-emoticons-pack/200/emoticons_evil-512.png',
-  iconSize: [20,20],
-  iconAnchor: [22,22]
+  iconUrl : 'http://clipart-library.com/images/kAibRMGc4.png',
+  iconSize: [40,30],
+  iconAnchor: [20,20]
 })
 
 
@@ -311,7 +320,7 @@ var risk_lyr = L.geoJSON(riskCollection, {
     },
     onEachFeature: handleRisk
 });
-risk_lyr.addTo(map);
+
 
 
 //handling stpt
@@ -343,7 +352,8 @@ stpt_lyr = L.geoJSON(stptCollection, {
 });
 
 stpt_lyr.addTo(map);
-
+risk_lyr.addTo(map);
+trea_lyr.addTo(map);
 //=======================================================================
 //==========================================handling events on the elements
 
@@ -361,7 +371,7 @@ var stl_stpt_unactivated = {
 var stl_trea_activated = L.icon({
   iconUrl : 'https://www.freepngimg.com/thumb/treasure/1-2-treasure-png-thumb.png',
   iconSize: [60,60],
-  iconAnchor: [50,0]
+  iconAnchor: [30,30]
 })
 
 var stl_link_activated = {
@@ -372,7 +382,7 @@ var stl_link_activated = {
 var stl_trea_unactivate = L.icon({
   iconUrl : 'http://www.transparentpng.com/thumb/treasure/chest-coins-gold-jewel-treasure-clipart-png-14.png',
   iconSize: [30,30],
-  iconAnchor: [30,0]
+  iconAnchor: [20,20]
 })
 
 var stl_link_unactivate = {
@@ -381,8 +391,8 @@ var stl_link_unactivate = {
 
 var stl_tres_chosen = L.icon({
   iconUrl : 'https://toppng.com/public/uploads/preview/treasure-chest-11526646982m3sax0b8i2.png',
-  iconSize: [40,40],
-  iconAnchor: [30,0]
+  iconSize: [50,50],
+  iconAnchor: [40,30]
 })
 
 var stl_link_chosen = {
@@ -593,29 +603,35 @@ function activateRisk(act_link_id,list_riskid,list_status,list_adddis,list_disTo
       0 : 'monster sleeping',
       1 : 'activated, Lv1 penalty',
       2 : 'activated, Lv2 penalty',
-      3 : 'activated, FATAL'
+      3 : 'activated, Lv3 penalty',
+      4 : 'activated, FATAL'
     },
 
     'ch_icon' : {
       0 : L.icon({
-        iconUrl : 'https://pngimage.net/wp-content/uploads/2018/06/sleeping-png-2.png',
+        iconUrl : 'http://clipart-library.com/image_gallery/7433.png',
         iconSize: [30,30],
-        iconAnchor: [30,0]
+        iconAnchor: [10,10]
       }),
       1 : L.icon({
         iconUrl : 'https://cdn1.iconfinder.com/data/icons/halloween-2176/60/029_-_Devil-512.png',
-        iconSize: [30,30],
-        iconAnchor: [30,0]
+        iconSize: [40,40],
+        iconAnchor: [20,20]
       }),
       2 : L.icon({
         iconUrl : 'https://cdn4.iconfinder.com/data/icons/miscellaneous-icons-3/200/monster_evil_skull-512.png',
-        iconSize: [30,30],
-        iconAnchor: [30,0]
+        iconSize: [40,40],
+        iconAnchor: [20,20]
       }),
       3 : L.icon({
+        iconUrl : 'https://www.nicepng.com/png/full/84-840970_evil-panda-png-graphic-transparent-panda-logo-head.png',
+        iconSize: [40,40],
+        iconAnchor: [20,20]
+      }),
+      4 : L.icon({
         iconUrl : 'https://cdn2.iconfinder.com/data/icons/game-characters-1/64/Angel-death-devil-evil-monster-avatar-character-512.png',
         iconSize: [60,60],
-        iconAnchor: [30,0]
+        iconAnchor: [30,30]
       })
     }
 
@@ -638,8 +654,8 @@ function activateRisk(act_link_id,list_riskid,list_status,list_adddis,list_disTo
     }
   })
 
-  if (list_status.includes(3)){
-    FailGame()
+  if (list_status.includes(4)){
+    FailGame('killed')
   }
 
 }
@@ -682,7 +698,7 @@ function chooseLink(ch_link_id,path_dist){
      console.log('Exception:', exception);
    }
  })
-   $('#distance').html(total_distance.toString())
+   $('#distance').html(total_distance.toFixed(2).toString())
 }
 
 var paintRoad = true
@@ -786,12 +802,13 @@ function endGame(){
   console.log('in endgame ')
 	if (link_rec.length > 4){
     console.log('successfully end of the game')
+    WinGame()
 		return true
 	}
 	else{
     if (noFurtherRoad == true){
       console.log('no road, end of the game')
-      FailGame()
+      FailGame('noRoad')
       return true
     }
     else{
@@ -802,15 +819,27 @@ function endGame(){
 }
 
 
-function FailGame(){
+function FailGame(arg){
+
   console.log('trigger fail')
   $('#death').css('display', 'block')
+  if (arg == 'noRoad'){
+    fail_html = 'No further treasure connected, you cannot collect enough treasures!'
+    $('#failing_info').html(fail_html)
+  }
+  else{
+    fail_html = 'You woke up the deadly monster!'
+    $('#failing_info').html(fail_html)
+  }
+
 }
 
 
 function WinGame(){
   console.log('trigger win')
   $('#winModal').css('display', 'block')
+  win_html = 'Travel Distance: ' + total_distance.toString()
+  $('#winning_info').html(win_html)
 }
 
 
@@ -824,11 +853,12 @@ function finishedPlaying(){
   $('#death').css('display', 'None')
 }
 
-
+/*
 $(document).ready(function(){
 
   handleZone()
 })
+*/
 
 </script>
 

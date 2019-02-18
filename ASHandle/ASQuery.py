@@ -243,7 +243,11 @@ def defRiskStatus(penalty,distance):
     rand = random.random()
     if rand > sleepFactor:
         if penalty == 3:
-            return 3,0
+            rand_cut = random.random()
+            if rand_cut > 0.7:
+                return 4,0
+            else:
+                return 3,1000
         elif penalty == 2:
             return 2,500
         else:
