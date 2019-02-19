@@ -10,7 +10,7 @@ import cx_Oracle
 import pandas as pd
 import json
 import pyproj
-#from jinja2 import Environment, FileSystemLoader
+
 
 
 class Point:
@@ -142,8 +142,11 @@ def connect_dbs():
     '''
     connect to database
     '''
+    #with open('../../../../../pw/asdm_pw.txt','r') as pwf:
+        #pw = pwf.read().strip()
     try:
         conn = cx_Oracle.connect("s1889111/Muffle67@geosgen")
+        #conn = cx_Oracle.connect(dsn = 'geosgen', user = 's1889111', password = pw)
     except:
         print('Cannot link to database')
         return None
@@ -258,20 +261,3 @@ def getInfoFromDB(conn,table_key):
     rst = formObjectJson(cs,table_key)
 
     return rst
-
-if __name__ == '__main__':
-    conn = connect_dbs()
-    start_pt_geojson = getInfoFromDB(conn,'get_start_pts')
-    zones_geojson = getInfoFromDB(conn,'get_zone_polygons_pts')
-    treasure_geojson = getInfoFromDB(conn,'get_treasure_pts')
-    risk_geojson = getInfoFromDB(conn,'get_risk_pts')
-    link_geojson = getInfoFromDB(conn,'get_link_pts')
-
-#JINJA
-#    env = Environment(loader = FileSystemLoader('template'))
-#    template = env.get_template('playground.html')
-#    print('Content-Type: text/html\n')
-#    print(template.render(
-#        zones_json = zones_geojson,
-#        stpts_json = start_pt_geojson
-#    ))

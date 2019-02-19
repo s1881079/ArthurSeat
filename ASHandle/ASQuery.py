@@ -258,6 +258,20 @@ def defRiskStatus(penalty,distance):
 
 def getRiskinDist(conn,path_id):
     '''
+    grab the information of risks, activate risks within distance
+    of 100m and trigger according to distance itself
+
+    Parameters
+    ----------
+    conn : cx_oracel,conn
+        database connected
+    path_id : int
+        id of path to calculate
+
+    Return
+    ------
+    lists for risk_id, risk_status, panalty level and distance
+        length of the targetted path
 
     '''
     qy_expr = '''
@@ -284,14 +298,3 @@ def getRiskinDist(conn,path_id):
         list_disToRoad.append(distance)
 
     return list_riskid,list_status,list_adddis,list_disToRoad
-
-
-
-'''
-if __name__ == '__main__':
-    conn = playground.connect_dbs()
-    adZone1 = findAdjZone(conn,1)
-    linktrs1 = findTsFromStpt(conn,1)
-    linkstpt8 = findStptFromTrs(conn,8)
-    p1_length = calLengthOfPath(conn,1)
-    '''

@@ -10,6 +10,7 @@ cgitb.enable()
 
 if __name__ == '__main__':
     conn = ash.connect_dbs()
+    #grab all information for display
     start_pt_geojson = ash.getInfoFromDB(conn,'get_start_pts')
     zones_geojson = ash.getInfoFromDB(conn,'get_zone_polygons_pts')
     treasure_geojson = ash.getInfoFromDB(conn,'get_treasure_pts')
@@ -18,7 +19,6 @@ if __name__ == '__main__':
 
 #JINJA
     env = Environment(loader = FileSystemLoader('templates'))
-    #template = env.get_template('game.html')
     template = env.get_template('game.html')
 
     print('Content-Type: text/html\n')

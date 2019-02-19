@@ -57,7 +57,9 @@
 $(document).ready(function(){
     $("#Start").click(function(){
     $("#game").toggle("slow");
-
+    $('#rulesbutton').click(function(){
+      $('#rulesofgame').toggle('slow');
+    })
   });
   handleZone()
 });
@@ -84,7 +86,7 @@ var riskCollection = {{risks_json}}
             </button>
             <a class="navbar-brand" href="#">Arthur's Seat Bandits</a>
           </div>
-          
+
         </div>
       </nav>
 
@@ -125,7 +127,7 @@ var riskCollection = {{risks_json}}
         width: 300px;
       }
       .distance {
-        height: 250px;
+        height: 100px;
         width: 250px;
         background-color: white;
         text-align: center;
@@ -135,23 +137,23 @@ var riskCollection = {{risks_json}}
         padding: 10px;
       }
       #distancebox {
-        height: 250px;
+        height: 100px;
         width: 250px;
         position: absolute;
         z-index: 2;
-        left: 50px;
+        right: 60px;
         padding-top: 16%;
       }
       #treasurebox {
-        height: 250px;
+        height: 100px;
         width: 250px;
         position: absolute;
         z-index: 3;
-        left: 50px;
+        right: 60px;
         padding-top: 0%;
        }
       .treasure {
-        height: 250px;
+        height: 100px;
         width: 250px;
         background-color: gold;
         text-align: center;
@@ -160,7 +162,46 @@ var riskCollection = {{risks_json}}
         border: 2px solid black;
         padding: 10px;
       }
+      #rulesbox {
+        height: 100px;
+        width: 250px;
+        position: absolute;
+        z-index: 1;
+        left: 60;
+        padding-top: 5%;
+      }
+      #rulesbutton{
+        background-color:  #a8b852;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 16px;
+      }
+      #rulesofgame{
+        background-color:  #a8b852;
+        margin: 10px;
+        padding:10px;
+      }
       </style>
+      <div id="rulesbox">
+             <button id= 'rulesbutton'>Instructions</button>
+             <div id="rulesofgame">
+               <h4 class="rules">
+                 <p>1. Double click icons to continue game</p>
+                 <p>2.Collect 1 treasure from each zone</p>
+                 <p>3. Take the shortest route possible your score is based on this!</p>
+                 <p>4. Beware of the dangers</p>
+                 <p>5. Pick a start point</p>
+                 <p>6. Choose first treasure</p>
+                 <p>7. Only access treasure in adjacent zone, ensure you do not get trapped in a zone!</p>
+                 <p>8. After all treasure collected leave through exit point</p>
+
+                 <p id="rules" style="font-size:50px"></p>
+               </h4>
+             </div>
+           </div>
       <div id="distancebox">
         <h4 class="distance">
           <p>The distance you have travelled</p>
@@ -234,6 +275,9 @@ L.easyButton("fa-crosshairs fa-lg",function(btn,map){
 },'Zoom To Home').addTo(map);
 
 
+
+
+
 //==================================================== displaying the map
 //=============adding layer groups to the map
 
@@ -276,12 +320,7 @@ function handleTreas(feature, layer) {
 
 var trea_lyr = L.geoJSON(treaCollection, {
     pointToLayer: function (feature, latlng) {
-	/* somthing might be used afterwards
-		switch (feature.properties.party) {
-            case 'Republican': return {color: "#ff0000"};
-            case 'Democrat':   return {color: "#0000ff"};
-        }
-		*/
+
         return L.marker(latlng, {icon : tresMarker});
     },
 	onEachFeature: handleTreas
@@ -290,16 +329,7 @@ var trea_lyr = L.geoJSON(treaCollection, {
 
 
 //handling risk
-/*
-var riskMarker = {
-    radius: 6,
-    fillColor: "#ff7800",
-    color: "#000",
-    weight: 1,
-    opacity: 1,
-    fillOpacity: 0.8
-};
-*/
+
 
 var riskMarker = L.icon({
   iconUrl : 'http://clipart-library.com/images/kAibRMGc4.png',
@@ -340,12 +370,7 @@ function handleStpt(feature, layer){
 
 stpt_lyr = L.geoJSON(stptCollection, {
     pointToLayer: function (feature, latlng) {
-	/* somthing might be used afterwards
-		switch (feature.properties.party) {
-            case 'Republican': return {color: "#ff0000"};
-            case 'Democrat':   return {color: "#0000ff"};
-        }
-		*/
+
         return L.circleMarker(latlng, stptMarker);
     },
 	onEachFeature: handleStpt
@@ -415,12 +440,9 @@ var sto_prev_ptid = new Array()
 function getTresByID(num_trs_id){
   var tar_tres
   trs_id = num_trs_id
-  //console.log('geting tres by')
-  //console.log(trs_id)
+
   treaCollection.forEach(function(elem){
-    //console.log(elem)
     if (elem.properties.treasure_id == trs_id){
-      //console.log('elem found')
       tar_tres =  elem
     }
   });
@@ -429,26 +451,19 @@ function getTresByID(num_trs_id){
 
 function findTresInSameZone(trs_id){
   var tmp_inz_ptid = new Array()
-  //console.log('finding trs in same zone with')
-  //console.log(trs_id)
+
   treaCollection.forEach(function(elem){
-    //console.log(elem)
     if (elem.properties.zone_id == getTresByID(trs_id).properties.zone_id){
       tmp_inz_ptid.push(elem.properties.treasure_id)
     }
   });
-  //console.log('temp inzone point id');
-  //console.log(tmp_inz_ptid);
+
   return tmp_inz_ptid
 }
 
 function activateTres(list_tresLinked,list_linkLength){
 	trea_lyr.eachLayer(function(layer){
-		//console.log(list_tresLinked);
-    //console.log(list_linkLength);
 		if ((list_tresLinked.includes(layer.feature.properties.treasure_id)) && !(sto_prev_ptid.includes(layer.feature.properties.treasure_id))){
-		  //console.log('find a treasur linked');
-		  //update show treaasure
 		  var ind_tres = list_tresLinked.indexOf(layer.feature.properties.treasure_id);
 		  //console.log(ind_tres);
 		  //console.log(layer.feature.properties.treasure_id);
@@ -689,8 +704,6 @@ function chooseLink(ch_link_id,path_dist){
      list_adddis = resp.l_adddis
      list_disToRoad = resp.l_todis
 
-     //bound popup of dis for activateFindTipHove
-     //change styles
      activateRisk(ch_link_id,list_riskid,list_status,list_adddis,list_disToRoad)
    },
    error: function(jqxhr, status, exception){
@@ -712,23 +725,15 @@ function contOnTreasure(last_tresLinked,prev_pt_id,last_linkLinked,last_linkLeng
     trea_lyr.eachLayer(function(layer){
     if (last_tresLinked.includes(layer.feature.properties.treasure_id)){
       cur_trea_id = layer.feature.properties.treasure_id
-      //console.log('chooseing a treasure')
-      //console.log(cur_trea_id);
-      layer.on('dblclick',(function(){
 
+      layer.on('dblclick',(function(){
         //function to confirm the last path and set style
         cur_trea_id = layer.feature.properties.treasure_id
-        //console.log('current treasure');
-        //console.log(cur_trea_id);
+
         var cur_ind = last_tresLinked.indexOf(cur_trea_id);
     		var cur_link_id = last_linkLinked[cur_ind];
     		var path_dist = last_linkLength[cur_ind];
-    		//chooseLink(cur_link_id,path_dist)
-    		//chooseTres(cur_trea_id)
 
-        //console.log(cur_trea_id);
-        //console.log('previous point');
-        //console.log(sto_prev_ptid);
         str_prev = (sto_prev_ptid).toString()
         $.ajax({
            url:"testOnF.py/",
@@ -743,9 +748,6 @@ function contOnTreasure(last_tresLinked,prev_pt_id,last_linkLinked,last_linkLeng
           },
           success:function(resp){
             //console.log(resp);
-            //var parsed_data = JSON.parse(resp);
-            //console.log(parsed_data)
-            //ilnk to the
             console.log('chooseing a treasure');
             console.log('sending ajax about tres');
             console.log(cur_trea_id);
@@ -770,8 +772,7 @@ function contOnTreasure(last_tresLinked,prev_pt_id,last_linkLinked,last_linkLeng
             console.log(list_tresLinked);
       			var list_linkLinked = resp.l_link;
       			var list_linkLength = resp.l_lengths;
-            //console.log(list_tresLinked);
-            //console.log(list_linkLength);
+
       			activateTres(list_tresLinked,list_linkLength)
       			activateLink(list_linkLinked)
       			dym_tresLinked = list_tresLinked.slice()
@@ -783,13 +784,9 @@ function contOnTreasure(last_tresLinked,prev_pt_id,last_linkLinked,last_linkLeng
             console.log('Exception:', exception);
           }
         })
-        if (!endGame()){
+        if (!endGame(cur_trea_id)){
 			contOnTreasure(dym_tresLinked,cur_trea_id,dym_linkLinked,dym_linkLength)
   		}
-  		/*
-  		else{
-  			goExit(cur_trea_id)
-  		}*/
 
       }))
 
@@ -798,11 +795,11 @@ function contOnTreasure(last_tresLinked,prev_pt_id,last_linkLinked,last_linkLeng
 }
 //}
 
-function endGame(){
+function endGame(cur_trea_id){
   console.log('in endgame ')
 	if (link_rec.length > 4){
     console.log('successfully end of the game')
-    WinGame()
+    WinGame(cur_trea_id)
 		return true
 	}
 	else{
@@ -835,11 +832,42 @@ function FailGame(arg){
 }
 
 
-function WinGame(){
+function WinGame(cur_trea_id){
   console.log('trigger win')
   $('#winModal').css('display', 'block')
   win_html = 'Travel Distance: ' + total_distance.toString()
   $('#winning_info').html(win_html)
+  $.ajax({
+   url:"testOnF.py/",
+   type: 'POST',
+   dataType : 'json',
+   async : false,
+   data: {
+     'key' : 'get_stpt_from_tres',
+     'tres_id' : cur_trea_id
+  },
+   success: function(resp){
+     var list_stptLinked = resp.l_stpt;
+     var list_linkLinked = resp.l_link;
+     var list_lengthLinked = resp.l_lengths;
+
+     link_lyr.eachLayer(function(layer){
+   		if (list_linkLinked.includes(layer.feature.properties.link_id)){
+         //console.log('rendering road chosen')
+   			layer.setStyle(stl_link_chosen)
+         //console.log(layer)
+   		}
+   	})
+
+    total_distance += list_lengthLinked[0]
+
+    
+  },
+  error: function(jqxhr, status, exception){
+    console.log('error in stpt process');
+    console.log('Exception:', exception);
+  }
+ })
 }
 
 
@@ -853,12 +881,6 @@ function finishedPlaying(){
   $('#death').css('display', 'None')
 }
 
-/*
-$(document).ready(function(){
-
-  handleZone()
-})
-*/
 
 </script>
 
@@ -871,16 +893,7 @@ $(document).ready(function(){
     </body>
 </div>
 <script>
-/*
-$.ajax({
-   url:"testOnF.py/",
-   type: 'POST',
-   data: {'p1' : 1},
-   success: function(resp){
-              console.log(resp);
-            }
-          })
-*/
+
 
 </script>
 </html> 
