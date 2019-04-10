@@ -4,9 +4,9 @@ this is a web map coursework for the Advance Spatial Database Management course.
 
 **Backend:**
 
-*Oracle Spatial
+* Oracle Spatial
 
-*Python - Jinja template
+* Python - Jinja template
 
 **Frontend:**
 
